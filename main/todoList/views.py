@@ -11,12 +11,21 @@ from rest_framework.decorators import api_view
 from todoList import signals
 from django.dispatch import receiver
 import logging
+import redis
 
+from my_microservice import settings
+
+# Connect to our Redis instance
+redis_instance = redis.StrictRedis(host=settings.REDIS_HOST,
+                                   port=settings.REDIS_PORT, db=0)
 logger = logging.getLogger(__name__)
+
+
 class TodoListView(APIView):
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
         signals.some_task_done.send(sender='abc_task_done', task_id=123)
+        redis_instance.set('key', 'value')
         results = TodoItem.objects.all()
         serializer = TodoSerializer(results, many=True)
         return Response(serializer.data)
@@ -41,7 +50,7 @@ class TodayTodosView(APIView):
 class NextSevenDaysTodosView(APIView):
     def get(self, request):
         today = datetime.now().date()
-        results = TodoItem.objects.filter(expireDate__range=(today, today+timedelta(days=6)))
+        results = TodoItem.objects.filter(expireDate__range=(today, today + timedelta(days=6)))
         serializer = TodoSerializer(results, many=True)
         return Response(serializer.data)
 
@@ -76,12 +85,11 @@ class TodoView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-
-
 @receiver(signals.some_task_done)
 def my_task_done(sender, task_id, **kwargs):
-    logger.warning('signal recived:' + sender  )
-    logger.warning(task_id )
-    print(sender, task_id)
+    logger.warning('signal recived:' + sender)
+    logger.warning(task_id)
+    value = redis_instance.get('key')
 
+    logger.warning(f"Redis: {value}")
+    print(sender, task_id)

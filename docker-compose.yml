@@ -23,3 +23,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+      - redis
+
+  redis:
+    image: redis:6-alpine

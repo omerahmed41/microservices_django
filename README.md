@@ -33,6 +33,7 @@ Features:
 * CI/CD Pipeline.
 * kubernetes.
 * Frontend
+* Error handling
 
 
 A Swager open API for djangorestframework to auto document your APIs
