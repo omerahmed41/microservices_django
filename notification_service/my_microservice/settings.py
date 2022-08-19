@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # apps
-    "user",
-    'todoList.apps.TodolistConfig',
     # packages
     "rest_framework",
     'drf_yasg',
