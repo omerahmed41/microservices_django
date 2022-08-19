@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps
     "user",
+    'todoList.apps.TodolistConfig',
     # packages
     "rest_framework",
     'drf_yasg',
