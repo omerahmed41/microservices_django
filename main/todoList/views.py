@@ -21,7 +21,8 @@ from django_q.tasks import AsyncTask
 from django_q.tasks import schedule
 from django.core.exceptions import SuspiciousOperation
 import math
-
+import pika
+from utils.producer import publish
 from todoList.domain_exception import ServiceUnavailable
 
 # Connect to our Redis instance
@@ -33,7 +34,7 @@ logger = logging.getLogger(__name__)
 class TodoListView(APIView):
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
-        raise ServiceUnavailable
+        # raise ServiceUnavailable
         redis_instance.set('key', 'value')
         signals.some_task_done.send(sender='abc_task_done', task_id=123)
 
@@ -100,17 +101,30 @@ class TodoView(APIView):
 def my_task_done(sender, task_id, **kwargs):
     logger.warning('signal recived:' + sender)
     logger.warning(task_id)
+
     value = redis_instance.get('key')
-
     logger.warning(f"Redis: {value}")
-    print(sender, task_id)
 
+    schedule_task()
+    publish('quote_created', {"message": "message"})
+    # connection = pika.BlockingConnection(
+    #     pika.ConnectionParameters('rabbitmq', 5672, '/', pika.PlainCredentials('guest', 'guest')))
+    # channel = connection.channel()
+    # channel.basic_publish(exchange='my_exchange', routing_key='test', body='Test!')
+
+
+    # channel.basic_consume(queue="my_app", on_message_callback=callback, auto_ack=True)
+    # channel.start_consuming()
+    # connection.close()
+
+def callback(ch, method, properties, body):
+    logger.warning(f'{body} is received')
+
+
+def schedule_task():
     after_3_days = (timezone.now() + timedelta(minutes=1))
     send_rejection_email_fuc = 'todoList.Tasks.send_rejection_email'
     hook = 'todoList.Tasks.print_result'
 
     schedule(send_rejection_email_fuc, 1, [1], hook=hook, next_run=timezone.now())
-
     schedule(send_rejection_email_fuc, 1, [1], hook=hook, next_run=after_3_days)
-
-
