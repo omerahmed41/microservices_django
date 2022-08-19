@@ -147,5 +147,5 @@ Q_CLUSTER = {
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'todoList.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'utils.utils.custom_exception_handler'
 }

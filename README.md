@@ -24,7 +24,7 @@ Features:
 * REDIS
 * Celery
 * Schedule Tasks (Django Q) 
-* Error handling
+* Custom exception handler
 * message broker - rabbitmq.
 * Notification Service
 * CI/CD Pipeline.
