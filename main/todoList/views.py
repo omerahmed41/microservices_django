@@ -19,7 +19,11 @@ from my_microservice import settings
 # AsyncTask class instance example
 from django_q.tasks import AsyncTask
 from django_q.tasks import schedule
+from django.core.exceptions import SuspiciousOperation
 import math
+
+from todoList.domain_exception import ServiceUnavailable
+
 # Connect to our Redis instance
 redis_instance = redis.StrictRedis(host=settings.REDIS_HOST,
                                    port=settings.REDIS_PORT, db=0)
@@ -29,6 +33,7 @@ logger = logging.getLogger(__name__)
 class TodoListView(APIView):
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
+        raise ServiceUnavailable
         redis_instance.set('key', 'value')
         signals.some_task_done.send(sender='abc_task_done', task_id=123)
 

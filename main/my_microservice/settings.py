@@ -145,3 +145,7 @@ Q_CLUSTER = {
         'port': 6379,
         'db': 0, }
 }
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'todoList.utils.custom_exception_handler'
+}
