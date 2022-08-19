@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # packages
     "rest_framework",
     'drf_yasg',
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,20 @@ STATIC_URL = "/static/"
 
 REDIS_HOST = 'redis'
 REDIS_PORT = 6379
+
+# settings.py example
+Q_CLUSTER = {
+    'name': 'myproject',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': 'redis',
+        'port': 6379,
+        'db': 0, }
+}

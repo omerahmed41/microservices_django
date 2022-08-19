@@ -21,19 +21,20 @@ Features:
 * sample app
 * Django signals.
 * Logs.
-* Celery
 * REDIS
+* Celery
+* Schedule Tasks (Django Q) 
+* Error handling
 * message broker - rabbitmq.
 * Notification Service
+* CI/CD Pipeline.
+* kubernetes.
 * auth service- keycloak ( todo).
 * Service registry.
 * API-gateway.
 * Design patterns (Pub-Sub, Command, Repository, Singleton).
 * layer architecture (DDD).
-* CI/CD Pipeline.
-* kubernetes.
 * Frontend
-* Error handling
 
 
 A Swager open API for djangorestframework to auto document your APIs

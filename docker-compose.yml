@@ -5,6 +5,8 @@ services:
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    networks:
+      - django_network
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -21,9 +23,17 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    networks:
+        - django_network
     depends_on:
       - db
       - redis
 
   redis:
     image: redis:6-alpine
+    networks:
+      - django_network
+
+networks:
+  django_network:
+    name: django_network

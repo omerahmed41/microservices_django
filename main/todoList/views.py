@@ -12,9 +12,14 @@ from todoList import signals
 from django.dispatch import receiver
 import logging
 import redis
+from django.utils import timezone
+from datetime import timedelta
 
 from my_microservice import settings
-
+# AsyncTask class instance example
+from django_q.tasks import AsyncTask
+from django_q.tasks import schedule
+import math
 # Connect to our Redis instance
 redis_instance = redis.StrictRedis(host=settings.REDIS_HOST,
                                    port=settings.REDIS_PORT, db=0)
@@ -24,8 +29,9 @@ logger = logging.getLogger(__name__)
 class TodoListView(APIView):
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
-        signals.some_task_done.send(sender='abc_task_done', task_id=123)
         redis_instance.set('key', 'value')
+        signals.some_task_done.send(sender='abc_task_done', task_id=123)
+
         results = TodoItem.objects.all()
         serializer = TodoSerializer(results, many=True)
         return Response(serializer.data)
@@ -93,3 +99,13 @@ def my_task_done(sender, task_id, **kwargs):
 
     logger.warning(f"Redis: {value}")
     print(sender, task_id)
+
+    after_3_days = (timezone.now() + timedelta(minutes=1))
+    send_rejection_email_fuc = 'todoList.Tasks.send_rejection_email'
+    hook = 'todoList.Tasks.print_result'
+
+    schedule(send_rejection_email_fuc, 1, [1], hook=hook, next_run=timezone.now())
+
+    schedule(send_rejection_email_fuc, 1, [1], hook=hook, next_run=after_3_days)
+
+
