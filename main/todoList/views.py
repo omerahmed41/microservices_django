@@ -8,11 +8,15 @@ from datetime import datetime, timedelta
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
+from todoList import signals
+from django.dispatch import receiver
+import logging
 
-
+logger = logging.getLogger(__name__)
 class TodoListView(APIView):
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
+        signals.some_task_done.send(sender='abc_task_done', task_id=123)
         results = TodoItem.objects.all()
         serializer = TodoSerializer(results, many=True)
         return Response(serializer.data)
@@ -70,3 +74,14 @@ class TodoView(APIView):
         # serializer = TodoSerializer(result)
         result.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+@receiver(signals.some_task_done)
+def my_task_done(sender, task_id, **kwargs):
+    logger.warning('signal recived:' + sender  )
+    logger.warning(task_id )
+    print(sender, task_id)
+

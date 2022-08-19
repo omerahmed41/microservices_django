@@ -20,8 +20,9 @@ Features:
 * makefile.
 * sample app
 * Django signals.
-* Celery
 * Logs.
+* Celery
+* REDIS
 * message broker - rabbitmq.
 * Notification Service
 * auth service- keycloak ( todo).
@@ -31,6 +32,7 @@ Features:
 * layer architecture (DDD).
 * CI/CD Pipeline.
 * kubernetes.
+* Frontend
 
 
 A Swager open API for djangorestframework to auto document your APIs
