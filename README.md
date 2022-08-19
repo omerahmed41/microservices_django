@@ -26,9 +26,9 @@ Features:
 * Schedule Tasks (Django Q) 
 * Custom exception handler
 * message broker - rabbitmq.
-* Notification Service
 * CI/CD Pipeline.
 * kubernetes.
+* Notification Service
 * auth service- keycloak ( todo).
 * Service registry.
 * API-gateway.

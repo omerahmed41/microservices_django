@@ -14,11 +14,29 @@ services:
 
   main:
     build: ./main
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/main/main
     ports:
       - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+        - django_network
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+
+  notification_service:
+    build: ./notification_service
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - .:/main/main
+    ports:
+      - "8001:8001"
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres

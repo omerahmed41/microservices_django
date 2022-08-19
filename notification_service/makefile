@@ -1,5 +1,5 @@
 reload:
-	make stop; make build; make run
+	make stop; make run
 
 run:
 	docker-compose up

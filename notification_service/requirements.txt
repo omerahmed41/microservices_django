@@ -1,0 +1,10 @@
+Django>=3.0,<4.0
+psycopg2-binary==2.9.3
+Pillow>==9.2.0
+redis==3.5.3
+django-redis
+django-q
+pika
+djangorestframework==3.13.1
+drf-yasg==1.20.0
+drf-yasg[validation]
