@@ -5,7 +5,10 @@ run:
 	docker-compose up
 
 run-d:
-	docker-compose up -d; docker-compose exec    notification_service  python3 utils/consumer.py
+	docker-compose up -d
+
+watch-emails:
+	 docker-compose exec    notification_service  python3 utils/consumer.py
 
 stop:
 	docker-compose down

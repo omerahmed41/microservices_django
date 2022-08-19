@@ -23,6 +23,10 @@ def callback(ch, method, properties, body):
     print(body)
     data = json.loads(body)
     print(data)
+    send_email()
+
+def send_email():
+    print(f"Sending email: Dear Omer, thanks for joining us")
 
 
 channel.basic_consume(queue='likes', on_message_callback=callback, auto_ack=True)

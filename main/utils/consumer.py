@@ -5,9 +5,7 @@ from sys import path
 from os import environ
 import logging
 logger = logging.getLogger(__name__)
-import time
 
-time.sleep(3)
 
 
 # path.append('/Users/omerSuliman/dev/py/microservices_django/main/my_microservice/settings.py') #Your path to settings.py file

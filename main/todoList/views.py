@@ -106,7 +106,7 @@ def my_task_done(sender, task_id, **kwargs):
     logger.warning(f"Redis: {value}")
 
     schedule_task()
-    publish('quote_created', {"message": "message"})
+    publish('quote_created', {"message": "user_created"})
     # connection = pika.BlockingConnection(
     #     pika.ConnectionParameters('rabbitmq', 5672, '/', pika.PlainCredentials('guest', 'guest')))
     # channel = connection.channel()
