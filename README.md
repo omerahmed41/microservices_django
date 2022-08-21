@@ -39,13 +39,6 @@ Each service have their separate database completely decoupled. Nginx sits in fr
 
 
 
-A Swager open API for djangorestframework to auto document your APIs
-
-![Screen Shot 2022-07-04 at 2 21 23 PM](https://user-images.githubusercontent.com/15717941/177135399-ed503896-38f8-4fe0-a41f-1a769fe2d85f.png)
-
-![Screen Shot 2022-07-04 at 2 21 55 PM](https://user-images.githubusercontent.com/15717941/177135458-10933058-acf7-4b25-85cc-8171654363a9.png)
-
-
 ### to test the APIs see: 
 #### http://127.0.0.1:8000/redoc/
 #### http://127.0.0.1:8000/swagger/
@@ -60,7 +53,11 @@ A Swager open API for djangorestframework to auto document your APIs
 #### I used OpenAPI with swagger for API docs, also  followed Domain driven design with services Layer architecture to make it easy to understand the code
 #### Lastly the Naming of Classes, methods and objects is meaningful.
 
+A Swager open API for djangorestframework to auto document your APIs
 
+![Screen Shot 2022-07-04 at 2 21 23 PM](https://user-images.githubusercontent.com/15717941/177135399-ed503896-38f8-4fe0-a41f-1a769fe2d85f.png)
+
+![Screen Shot 2022-07-04 at 2 21 55 PM](https://user-images.githubusercontent.com/15717941/177135458-10933058-acf7-4b25-85cc-8171654363a9.png)
 
 ## Communications: 
 #### For Async communications I used rabbitmq, and for sync I used normal http calls later on grpc will be good use, also we can use REDIS as improvement.
