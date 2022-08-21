@@ -1,9 +1,10 @@
 reload:
-	make stop; make build; make run
+	make stop; make build; make run-d; make superuser; make logs
 
 run:
 	docker-compose up
-
+logs:
+	docker-compose logs -f
 run-d:
 	docker-compose up -d
 
@@ -23,13 +24,13 @@ build:
 	docker-compose build
 	
 migrate:
-	docker-compose exec web python manage.py migrate
+	docker-compose exec main python manage.py migrate
 
 makemigrations:
-	docker-compose exec web python manage.py makemigrations
+	docker-compose exec main python manage.py makemigrations
 
-create_superuser:
-	docker-compose exec web python manage.py createsuperuser
+superuser:
+	docker-compose exec main python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@admin.com', 'admin')"
 
 test:
 	docker-compose exec -T web  python manage.py test  --keepdb

@@ -8,25 +8,22 @@ from datetime import datetime, timedelta
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
-from todoList import signals
 from django.dispatch import receiver
 import logging
 import redis
-from django.utils import timezone
 from datetime import timedelta
 import json
-
 from my_microservice import settings
 # AsyncTask class instance example
-from django_q.tasks import AsyncTask
-from django_q.tasks import schedule
 from django.core.exceptions import SuspiciousOperation
 import math
 import pika
-from utils.producer import publish
-from todoList.domain_exception import ServiceUnavailable
+from todoList.domain.domain_exception import ServiceUnavailable
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+
+from todoList.serializers import TodoPostSerializer
+
 # Connect to our Redis instance
 redis_instance = redis.StrictRedis(host=settings.REDIS_HOST,
                                    port=settings.REDIS_PORT, db=0)
@@ -35,8 +32,8 @@ logger = logging.getLogger(__name__)
 
 class TodoListView(APIView):
 
-    # uthentication_classes = [SessionAuthentication, BasicAuthentication]
-    # permission_classes = [IsAuthenticated]
+    uthentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
         # raise ServiceUnavailable
@@ -53,11 +50,11 @@ class TodoListView(APIView):
 
             return Response(serializer.data)
 
-    @swagger_auto_schema(operation_description="TodoSerializer", request_body=TodoSerializer)
+    @swagger_auto_schema(operation_description="TodoSerializer", request_body=TodoPostSerializer)
     def post(self, request):
-        serializer = TodoSerializer(data=request.data)
+        serializer = TodoPostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -115,18 +112,6 @@ class TodoView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@receiver(signals.some_task_done)
-def my_task_done(sender, task_id, **kwargs):
-    logger.info(f"signal received: {sender}, {task_id}")
-
-    schedule_task()
-    publish('quote_created', {"message": "user_created"})
 
 
-def schedule_task():
-    after_3_days = (timezone.now() + timedelta(minutes=1))
-    send_rejection_email_fuc = 'todoList.Tasks.send_rejection_email'
-    hook = 'todoList.Tasks.print_result'
 
-    schedule(send_rejection_email_fuc, 1, [1], hook=hook, next_run=timezone.now())
-    schedule(send_rejection_email_fuc, 1, [1], hook=hook, next_run=after_3_days)
