@@ -16,7 +16,6 @@ Each service have their separate database completely decoupled. Nginx sits in fr
 * open API and swagger.
 * docker with Docker compose.
 * makefile.
-* sample app
 * Django signals.
 * Logs.
 * REDIS
@@ -27,12 +26,13 @@ Each service have their separate database completely decoupled. Nginx sits in fr
 * CI/CD Pipeline.
 * kubernetes.
 * Nginx API-gateway.
+* Service registry(Eureka Spring Cloud).
+* todo-list app
 * Notification Service
 * Design patterns (Pub-Sub, Command, Repository, Singleton).
 * layer architecture (DDD).
 * Frontend
-* auth service- keycloak ( todo).
-* Service registry.
+* auth service- keycloak (todo).
 
 # System Architecture:
 ![System Architecture](https://user-images.githubusercontent.com/15717941/185804170-07e3266b-a0c8-47b2-b0b7-c506731bb45d.jpg)
