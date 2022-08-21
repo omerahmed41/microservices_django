@@ -4,8 +4,8 @@ import django
 from sys import path
 from os import environ
 import logging
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
 
 
 # path.append('/Users/omerSuliman/dev/py/microservices_django/main/my_microservice/settings.py') #Your path to settings.py file
@@ -14,9 +14,13 @@ logger = logging.getLogger(__name__)
 
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters('rabbitmq', 5672, '/', pika.PlainCredentials('guest', 'guest')))
+    pika.ConnectionParameters(
+        "rabbitmq", 5672, "/", pika.PlainCredentials("guest", "guest")
+    )
+)
 channel = connection.channel()
-channel.queue_declare(queue='likes')
+channel.queue_declare(queue="likes")
+
 
 def callback(ch, method, properties, body):
     print("Received in likes...")
@@ -25,7 +29,7 @@ def callback(ch, method, properties, body):
     print(data)
 
 
-channel.basic_consume(queue='likes', on_message_callback=callback, auto_ack=True)
+channel.basic_consume(queue="likes", on_message_callback=callback, auto_ack=True)
 logging.info("Started Consuming...")
 print("Started Consuming...")
 channel.start_consuming()

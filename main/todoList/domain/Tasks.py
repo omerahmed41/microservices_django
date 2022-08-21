@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 
 
 def send_rejection_email(client_id, rejected_docs_ids):
-    logger.warning('DQ task')
+    logger.warning("DQ task")
     return "send_rejection_email successes"
 
 
@@ -24,6 +24,5 @@ def write_test_file(text):
 
 
 def print_result(task):
-    logger.warning('Task.result:')
+    logger.warning("Task.result:")
     logger.warning(task.result)
-

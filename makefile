@@ -36,10 +36,10 @@ test:
 	docker-compose exec -T web  python manage.py test  --keepdb
 
 format_with_black:
-	black .
+	black ./main
 
 flake8:
-	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude venv; flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude venv
+	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude venv; flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude [venv, data]
 
 sort_imports:
 	isort .; isort --check --diff .

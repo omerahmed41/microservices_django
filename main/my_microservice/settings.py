@@ -39,11 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps
     "user",
-    'todoList.apps.TodolistConfig',
+    "todoList.apps.TodolistConfig",
     # packages
     "rest_framework",
-    'drf_yasg',
-    'django_q',
+    "drf_yasg",
+    "django_q",
 ]
 
 MIDDLEWARE = [
@@ -126,30 +126,31 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-REDIS_HOST = 'redis'
+REDIS_HOST = "redis"
 REDIS_PORT = 6379
 
 # settings.py example
 Q_CLUSTER = {
-    'name': 'myproject',
-    'workers': 8,
-    'recycle': 500,
-    'timeout': 60,
-    'compress': True,
-    'save_limit': 250,
-    'queue_limit': 500,
-    'cpu_affinity': 1,
-    'label': 'Django Q',
-    'redis': {
-        'host': 'redis',
-        'port': 6379,
-        'db': 0, }
+    "name": "myproject",
+    "workers": 8,
+    "recycle": 500,
+    "timeout": 60,
+    "compress": True,
+    "save_limit": 250,
+    "queue_limit": 500,
+    "cpu_affinity": 1,
+    "label": "Django Q",
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "db": 0,
+    },
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utils.utils.custom_exception_handler',
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ]
+    "EXCEPTION_HANDLER": "utils.utils.custom_exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
 }

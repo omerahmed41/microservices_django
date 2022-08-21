@@ -3,16 +3,25 @@ from todoList.models import TodoItem
 
 
 class TodoSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source="owner.username")
+
     class Meta:
         model = TodoItem
-        fields = ('id', 'owner', 'content', 'priority', 'flag', 'expireDate', 'created_at')
+        fields = (
+            "id",
+            "owner",
+            "content",
+            "priority",
+            "flag",
+            "expireDate",
+            "created_at",
+        )
 
 
 class TodoPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = TodoItem
-        fields = ('id', 'content', 'priority', 'flag')
+        fields = ("id", "content", "priority", "flag")
 
     def create(self, validated_data):
         """

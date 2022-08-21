@@ -14,6 +14,7 @@ import redis
 from datetime import timedelta
 import json
 from my_microservice import settings
+
 # AsyncTask class instance example
 from django.core.exceptions import SuspiciousOperation
 import math
@@ -25,8 +26,9 @@ from rest_framework.permissions import IsAuthenticated
 from todoList.serializers import TodoPostSerializer
 
 # Connect to our Redis instance
-redis_instance = redis.StrictRedis(host=settings.REDIS_HOST,
-                                   port=settings.REDIS_PORT, db=0)
+redis_instance = redis.StrictRedis(
+    host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0
+)
 logger = logging.getLogger(__name__)
 
 
@@ -34,10 +36,11 @@ class TodoListView(APIView):
 
     uthentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
+
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
         # raise ServiceUnavailable
-        cached_todo_items = redis_instance.get('todo_items')
+        cached_todo_items = redis_instance.get("todo_items")
         if cached_todo_items:
             logger.warning(f"Redis: {cached_todo_items}")
             data = json.loads(cached_todo_items)
@@ -45,12 +48,14 @@ class TodoListView(APIView):
         else:
             todo_items = TodoItem.objects.all()
             serializer = TodoSerializer(todo_items, many=True)
-            redis_instance.set('todo_items', json.dumps(serializer.data), 10)
+            redis_instance.set("todo_items", json.dumps(serializer.data), 10)
             # signals.some_task_done.send(sender='abc_task_done', task_id=123)
 
             return Response(serializer.data)
 
-    @swagger_auto_schema(operation_description="TodoSerializer", request_body=TodoPostSerializer)
+    @swagger_auto_schema(
+        operation_description="TodoSerializer", request_body=TodoPostSerializer
+    )
     def post(self, request):
         serializer = TodoPostSerializer(data=request.data)
         if serializer.is_valid():
@@ -70,7 +75,9 @@ class TodayTodosView(APIView):
 class NextSevenDaysTodosView(APIView):
     def get(self, request):
         today = datetime.now().date()
-        results = TodoItem.objects.filter(expireDate__range=(today, today + timedelta(days=6)))
+        results = TodoItem.objects.filter(
+            expireDate__range=(today, today + timedelta(days=6))
+        )
         serializer = TodoSerializer(results, many=True)
         return Response(serializer.data)
 
@@ -110,8 +117,3 @@ class TodoView(APIView):
         # serializer = TodoSerializer(result)
         result.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
