@@ -14,6 +14,7 @@ import logging
 import redis
 from django.utils import timezone
 from datetime import timedelta
+import json
 
 from my_microservice import settings
 # AsyncTask class instance example
@@ -33,17 +34,24 @@ logger = logging.getLogger(__name__)
 
 
 class TodoListView(APIView):
-    uthentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+
+    # uthentication_classes = [SessionAuthentication, BasicAuthentication]
+    # permission_classes = [IsAuthenticated]
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
         # raise ServiceUnavailable
-        redis_instance.set('key', 'value')
-        signals.some_task_done.send(sender='abc_task_done', task_id=123)
+        cached_todo_items = redis_instance.get('todo_items')
+        if cached_todo_items:
+            logger.warning(f"Redis: {cached_todo_items}")
+            data = json.loads(cached_todo_items)
+            return Response(data)
+        else:
+            todo_items = TodoItem.objects.all()
+            serializer = TodoSerializer(todo_items, many=True)
+            redis_instance.set('todo_items', json.dumps(serializer.data), 10)
+            # signals.some_task_done.send(sender='abc_task_done', task_id=123)
 
-        results = TodoItem.objects.all()
-        serializer = TodoSerializer(results, many=True)
-        return Response(serializer.data)
+            return Response(serializer.data)
 
     @swagger_auto_schema(operation_description="TodoSerializer", request_body=TodoSerializer)
     def post(self, request):
@@ -72,12 +80,19 @@ class NextSevenDaysTodosView(APIView):
 
 class TodoView(APIView):
     def get(self, request, id):
-        try:
-            result = TodoItem.objects.get(id=id)
-        except TodoItem.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = TodoSerializer(result)
-        return Response(serializer.data)
+        cached_todo_item = redis_instance.get(f"todo_item_{id}")
+        if cached_todo_item:
+            logger.warning(f"Redis: {cached_todo_item}")
+            data = json.loads(cached_todo_item)
+            return Response(data)
+        else:
+            try:
+                result = TodoItem.objects.get(id=id)
+            except TodoItem.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = TodoSerializer(result)
+            redis_instance.set(f"todo_item_{id}", json.dumps(serializer.data), 100)
+            return Response(serializer.data)
 
     def put(self, request, id):
         try:
@@ -102,18 +117,10 @@ class TodoView(APIView):
 
 @receiver(signals.some_task_done)
 def my_task_done(sender, task_id, **kwargs):
-    logger.warning('signal recived:' + sender)
-    logger.warning(task_id)
-
-    value = redis_instance.get('key')
-    logger.warning(f"Redis: {value}")
+    logger.info(f"signal received: {sender}, {task_id}")
 
     schedule_task()
     publish('quote_created', {"message": "user_created"})
-
-
-def callback(ch, method, properties, body):
-    logger.warning(f'{body} is received')
 
 
 def schedule_task():

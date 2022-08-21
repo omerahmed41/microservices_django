@@ -19,6 +19,7 @@ services:
       - .:/main/main
     ports:
       - "8000:8000"
+    restart: always
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
