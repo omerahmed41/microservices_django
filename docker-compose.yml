@@ -30,6 +30,7 @@ services:
       - db
       - redis
       - rabbitmq
+      - service-registry
 
   notification_service:
     build: ./notification_service
@@ -48,6 +49,7 @@ services:
       - db
       - redis
       - rabbitmq
+      - service-registry
 
 
   redis:
@@ -57,10 +59,10 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
+    container_name: rabbitmq_django
+#    ports:
+#      - 5672:5672
+#      - 15672:15672
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
@@ -80,6 +82,17 @@ services:
     networks:
       - django_network
 
+  service-registry:
+    container_name:  service-registry
+    build:
+        context: ./service-registry
+        args:
+          JDK_VERSION: 17
+        dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+    networks:
+      - django_network
 networks:
   django_network:
     name: django_network

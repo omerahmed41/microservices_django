@@ -146,3 +146,11 @@ Q_CLUSTER = {
 }
 
 REST_FRAMEWORK = {"EXCEPTION_HANDLER": "utils.utils.custom_exception_handler"}
+
+import py_eureka_client.eureka_client as eureka_client
+
+your_rest_server_port = 8001
+# The flowing code will register your server to eureka server and also start to send heartbeat every 30 seconds
+eureka_client.init(eureka_server="service-registry:8761",
+                   app_name="django_notification_service",
+                   instance_port=your_rest_server_port)
