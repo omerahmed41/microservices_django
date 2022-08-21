@@ -147,5 +147,9 @@ Q_CLUSTER = {
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utils.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'utils.utils.custom_exception_handler',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
 }

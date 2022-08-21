@@ -24,7 +24,8 @@ import math
 import pika
 from utils.producer import publish
 from todoList.domain_exception import ServiceUnavailable
-
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Connect to our Redis instance
 redis_instance = redis.StrictRedis(host=settings.REDIS_HOST,
                                    port=settings.REDIS_PORT, db=0)
@@ -32,6 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 class TodoListView(APIView):
+    uthentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(responses={200: TodoSerializer(many=True)})
     def get(self, request):
         # raise ServiceUnavailable
@@ -107,15 +110,7 @@ def my_task_done(sender, task_id, **kwargs):
 
     schedule_task()
     publish('quote_created', {"message": "user_created"})
-    # connection = pika.BlockingConnection(
-    #     pika.ConnectionParameters('rabbitmq', 5672, '/', pika.PlainCredentials('guest', 'guest')))
-    # channel = connection.channel()
-    # channel.basic_publish(exchange='my_exchange', routing_key='test', body='Test!')
 
-
-    # channel.basic_consume(queue="my_app", on_message_callback=callback, auto_ack=True)
-    # channel.start_consuming()
-    # connection.close()
 
 def callback(ch, method, properties, body):
     logger.warning(f'{body} is received')
