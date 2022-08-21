@@ -34,6 +34,10 @@ Each service have their separate database completely decoupled. Nginx sits in fr
 * auth service- keycloak ( todo).
 * Service registry.
 
+# System Architecture:
+![System Architecture](https://user-images.githubusercontent.com/15717941/185804170-07e3266b-a0c8-47b2-b0b7-c506731bb45d.jpg)
+
+
 
 A Swager open API for djangorestframework to auto document your APIs
 
