@@ -39,7 +39,7 @@ format_with_black:
 	black ./main
 
 flake8:
-	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude venv; flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude [venv, data]
+	flake8 ./main --count --select=E9,F63,F7,F82 --show-source --statistics --exclude venv; flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude venv
 
 sort_imports:
 	isort .; isort --check --diff .
