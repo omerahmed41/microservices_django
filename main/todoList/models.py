@@ -1,7 +1,4 @@
 from django.db import models
-from django.utils import timezone
-from datetime import datetime, timedelta
-from django.utils import timezone, dateformat
 
 # Create your models here.
 

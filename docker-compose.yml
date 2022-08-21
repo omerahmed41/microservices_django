@@ -67,6 +67,19 @@ services:
     networks:
       - django_network
 
+  nginx:
+    build: ./web
+    ports:
+      - 80:80
+    links:
+      - notification_service
+      - main
+    depends_on:
+      - notification_service
+      - main
+    networks:
+      - django_network
+
 networks:
   django_network:
     name: django_network

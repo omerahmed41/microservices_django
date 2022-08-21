@@ -1,18 +1,16 @@
 # microservice-django
 A microservice blueprint built with python Django
 
-using docker and having django-restFramework, celery, and redis installed ready.
-
-For first build:
-   make setup
-To run:
-  make run 
-  
-To stop:
-  make stop
+Each service have their separate database completely decoupled. Nginx sits in front of each of the services to abstract all the microservices API endpoints into single one.
+#### For first build:
+* make setup
+#### To run:
+* make run
+#### To stop:
+* make stop
 
 
-Features:
+## Technology Stack & Features:
 * Django fresh build
 * RestFramework
 * open API and swagger.
@@ -28,13 +26,13 @@ Features:
 * message broker - rabbitmq.
 * CI/CD Pipeline.
 * kubernetes.
+* Nginx API-gateway.
 * Notification Service
-* auth service- keycloak ( todo).
-* Service registry.
-* API-gateway.
 * Design patterns (Pub-Sub, Command, Repository, Singleton).
 * layer architecture (DDD).
 * Frontend
+* auth service- keycloak ( todo).
+* Service registry.
 
 
 A Swager open API for djangorestframework to auto document your APIs
