@@ -33,7 +33,7 @@ superuser:
 	docker-compose exec main python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@admin.com', 'admin')"
 
 test:
-	docker-compose exec -T web  python manage.py test  --keepdb
+	docker-compose exec -T main  python manage.py test  --keepdb
 
 format_with_black:
 	black ./main
