@@ -1,5 +1,5 @@
 from django.utils import timezone
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django_q.tasks import schedule
 
 

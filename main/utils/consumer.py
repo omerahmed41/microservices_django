@@ -1,16 +1,8 @@
 import json
 import pika
-import django
-from sys import path
-from os import environ
 import logging
 
 logger = logging.getLogger(__name__)
-
-
-# path.append('/Users/omerSuliman/dev/py/microservices_django/main/my_microservice/settings.py') #Your path to settings.py file
-# environ.setdefault('DJANGO_SETTINGS_MODULE', 'Likes.settings')
-# django.setup()
 
 
 connection = pika.BlockingConnection(

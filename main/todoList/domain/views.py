@@ -1,25 +1,15 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from todoList.models import TodoItem
 from todoList.serializers import TodoSerializer
-from datetime import datetime, timedelta
-from drf_yasg import openapi
+from datetime import datetime
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view
-from django.dispatch import receiver
 import logging
 import redis
 from datetime import timedelta
 import json
 from my_microservice import settings
-
-# AsyncTask class instance example
-from django.core.exceptions import SuspiciousOperation
-import math
-import pika
-from todoList.domain.domain_exception import ServiceUnavailable
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
