@@ -39,11 +39,40 @@ jobs:
         # stop the build if there are Python syntax errors or undefined names
         isort ./main
         isort --check --diff ./main
-        
-    - name: Run check
-      run:  make test
-    
+
     - name: Stop containers
       if: always()
       run: make stop
  
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: make run-d
+
+    - name: Run check
+      run:  make test
+
+    - name: Stop containers
+      if: always()
+      run: make stop
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: make run-d
+      # build docker image and push to the cloud
+    - name: Stop containers
+      if: always()
+      run: make stop
+
