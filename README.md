@@ -38,10 +38,13 @@ Each service have their separate database completely decoupled. Nginx sits in fr
 ![System Architecture](https://user-images.githubusercontent.com/15717941/185804170-07e3266b-a0c8-47b2-b0b7-c506731bb45d.jpg)
 
 
+## Eureka Service:
+#### to see all Instances currently registered with Eureka
+* URL: http://localhost:8761
+<img width="1435" alt="Screen Shot 2022-08-22 at 2 02 48 AM" src="https://user-images.githubusercontent.com/15717941/185812782-7510305c-25b0-4ffe-b895-d34f88f0c4c8.png">
 
-### to test the APIs see: 
-#### http://127.0.0.1:8000/redoc/
-#### http://127.0.0.1:8000/swagger/
+
+
 
 ## RabbitMq Dashboard:
 * URL: http://localhost:15672
@@ -53,14 +56,18 @@ Each service have their separate database completely decoupled. Nginx sits in fr
 #### I used OpenAPI with swagger for API docs, also  followed Domain driven design with services Layer architecture to make it easy to understand the code
 #### Lastly the Naming of Classes, methods and objects is meaningful.
 
-A Swager open API for djangorestframework to auto document your APIs
+### to test the APIs see: 
+#### http://127.0.0.1:8000/redoc/
+#### http://127.0.0.1:8000/swagger/
+
+We used  swager open-API to auto document your APIs
 
 ![Screen Shot 2022-07-04 at 2 21 23 PM](https://user-images.githubusercontent.com/15717941/177135399-ed503896-38f8-4fe0-a41f-1a769fe2d85f.png)
 
 ![Screen Shot 2022-07-04 at 2 21 55 PM](https://user-images.githubusercontent.com/15717941/177135458-10933058-acf7-4b25-85cc-8171654363a9.png)
 
 ## Communications: 
-#### For Async communications I used rabbitmq, and for sync I used normal http calls later on grpc will be good use, also we can use REDIS as improvement.
+#### For Async communications I used rabbitmq, and for sync I used normal http calls (later on grpc will be good use).
 
 
 ## Design Patterns:
