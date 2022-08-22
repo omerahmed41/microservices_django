@@ -18,8 +18,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       
-    - name: Install dependencies
-      run: make build_service_registry; make run-d
+    - name: make build
+      run: make build
+
+    - name: make run
+      run: make run-d
       
 
     - name: Format with black
