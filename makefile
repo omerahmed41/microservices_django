@@ -21,7 +21,7 @@ setup:
 	make build; make run-d; make makemigrations; make migrate;  make create_superuser; make logs_web
 
 build:
-	docker-compose build
+	make build_service_registry; docker-compose build
 	
 migrate:
 	docker-compose exec main python manage.py migrate
@@ -48,7 +48,8 @@ checks:
 	make format_with_black; make flake8; make sort_imports; make test
 logs_web:
 	docker-compose logs web --tail 10 --follow
-
+build_service_registry:
+	cd service_registry; make build; cd ..
 grep:
 	docker-compose logs web --follow | grep -i $(keyword)
 

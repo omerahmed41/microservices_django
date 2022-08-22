@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v3
       
     - name: Install dependencies
-      run: make run-d
+      run: make build_service_registry; make run-d
       
 
     - name: Format with black
@@ -49,11 +49,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-#    - name: Install dependencies
-#      run: make run-d
+    - name: Install dependencies
+      run: make run-d
 
-#    - name: Run check
-#      run:  make test
+    - name: Run check
+      run:  make test
 
 
   deploy:
@@ -64,8 +64,8 @@ jobs:
     - uses: actions/checkout@v3
 
 
-      # build docker image and push to the cloud
-#    - name: Stop containers
-#      if: always()
-#      run: make stop
+       build docker image and push to the cloud
+    - name: Stop containers
+      if: always()
+      run: make stop
 

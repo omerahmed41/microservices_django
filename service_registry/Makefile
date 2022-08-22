@@ -1,0 +1,5 @@
+
+build:
+	./mvnw clean package
+
+
