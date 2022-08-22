@@ -21,7 +21,7 @@ setup:
 	make build; make run-d; make makemigrations; make migrate;  make create_superuser; make logs_web
 
 build:
-	make build_service_registry; docker-compose build
+	docker-compose build
 	
 migrate:
 	docker-compose exec main python manage.py migrate
