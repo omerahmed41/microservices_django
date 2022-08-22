@@ -85,7 +85,7 @@ services:
   service-registry:
     container_name:  service-registry
     build:
-        context: ./service-registry
+        context: ./service_registry
         args:
           JDK_VERSION: 17
         dockerfile: Dockerfile
