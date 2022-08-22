@@ -2,7 +2,8 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
+#    branches: [ "master" ]
 
   workflow_dispatch:
       inputs:
