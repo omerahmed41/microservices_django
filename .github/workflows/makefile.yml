@@ -52,8 +52,8 @@ jobs:
 #    - name: Install dependencies
 #      run: make run-d
 
-    - name: Run check
-      run:  make test
+#    - name: Run check
+#      run:  make test
 
 
   deploy:
@@ -65,7 +65,7 @@ jobs:
 
 
       # build docker image and push to the cloud
-    - name: Stop containers
-      if: always()
-      run: make stop
+#    - name: Stop containers
+#      if: always()
+#      run: make stop
 
